@@ -21,7 +21,10 @@ clj -R:nrepl -m nrepl.cmdline --middleware "[cider.nrepl/cider-middleware cider.
 ```
 
 2. Connect to an nREPL from vim using:
-   `:Connect nrepl://localhost:{port}`
+
+```
+:Connect nrepl://localhost:{port}
+```
 
 3. Start a figwheel REPL and connect to it:
 
