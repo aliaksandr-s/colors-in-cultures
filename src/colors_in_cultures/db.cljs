@@ -10,12 +10,30 @@
 (def conn (d/create-conn schema))
 
 (def colors 
-  [{:color/name "red"}
-   {:color/name "green"}
-   {:color/name "yellow"}
-   {:color/name "blue"}
-   {:color/name "white"}
-   {:color/name "black"}])
+  [{:color/name "red"
+    :color/code "#ea402b"}
+   {:color/name "green"
+    :color/code "#5ac76c"}
+   {:color/name "yellow"
+    :color/code "#fae368"}
+   {:color/name "purple"
+    :color/code "#7b68ab"}
+   {:color/name "orange"
+    :color/code "#ee841e"}
+   {:color/name "pink"
+    :color/code "#f091ab"}
+   {:color/name "gold"
+    :color/code "#f6cb63"}
+   {:color/name "blue"
+    :color/code "#50ade3"}
+   {:color/name "white"
+    :color/code "#ffffff"}
+   {:color/name "grey"
+    :color/code "#b3b3b3"}
+   {:color/name "silver"
+    :color/code "#999999"}
+   {:color/name "black"
+    :color/code "#000000"}])
 
 
 (def nations
