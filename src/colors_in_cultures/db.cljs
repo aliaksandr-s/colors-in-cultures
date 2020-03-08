@@ -73,13 +73,20 @@
    {:emotion/id   "3"
     :emotion/name "Authority"
     :emotion/relations [[{:nation/id "A"} {:color/name "black"}]]}
-   
    ])
 
 
 (d/transact! conn colors)
 (d/transact! conn nations)
 (d/transact! conn emotions)
+
+(defn get-colors []
+  (->> (d/q '[:find [(pull ?color-e [:color/name :color/code]) ...]
+          :where [?color-e :color/name _]]
+        @conn)
+       (sort-by :color/name)))
+
+(get-colors)
 
 (defn has-color? [relations color]
   (some (fn [rel] (= (-> rel second :color/name) color)) relations))
@@ -103,22 +110,22 @@
 
 
 (defn get-emotions-by-color [color]
-  (d/q '[:find ?name ?nations 
-         :in $ ?color ?has-color get-nations
-         :where 
-         [?entity :emotion/name ?name]
-         [?entity :emotion/relations ?rel]
-         [(?has-color ?rel ?color) _]
-         [(get-nations ?rel ?color) ?nations]]
-       @conn
-       color
-       has-color?
-       get-nations) )
+  (->> (d/q '[:find ?name ?nations 
+              :in $ ?color ?has-color get-nations
+              :where 
+              [?entity :emotion/name ?name]
+              [?entity :emotion/relations ?rel]
+              [(?has-color ?rel ?color) _]
+              [(get-nations ?rel ?color) ?nations]]
+            @conn
+            color
+            has-color?
+            get-nations)
+       (map #(vector (first %) 
+                     (flatten (second %))))))
 
 
-(->> (get-emotions-by-color "black") 
-     (map #(vector (first %) 
-                   (flatten (second %)))))
+(get-emotions-by-color "red")
 
 ; (defn get-nations-list [nation-ids]
 ;   (d/q '[:find [?nation-name ...]
