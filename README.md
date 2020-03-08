@@ -20,15 +20,15 @@
 clj -R:nrepl -m nrepl.cmdline --middleware "[cider.nrepl/cider-middleware cider.piggieback/wrap-cljs-repl]"
 ```
 
-2. Connect to an nREPL from vim using:
+2. Connect to the nREPL from vim using:
 
 ```
 :Connect nrepl://localhost:{port}
 ```
 
-3. Start a figwheel REPL and connect to it:
+3. Start the figwheel REPL and connect to it:
 
 ```clojure
 :CljEval (do (require 'figwheel.main.api) (figwheel.main.api/start "dev"))
-:CljEval (do (use 'figwheel.main.api) (figwheel.main.api/cljs-repl "dev")) 
+:CljEval (figwheel.main.api/cljs-repl "dev") 
 ```

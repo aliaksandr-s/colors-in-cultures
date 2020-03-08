@@ -1,19 +1,17 @@
 (ns colors-in-cultures.core
-  (:require [datascript.core :as d]))
+  (:require [rum.core :as rum]))
 
-(let [schema {:aka {:db/cardinality :db.cardinality/many}}
-      conn   (d/create-conn schema)]
-  (d/transact! conn [ { :db/id -1
-                        :name  "Maksim"
-                        :age   45
-                        :aka   ["Max Otto von Stierlitz", "Jack Ryan"] } ])
-  (d/q '[ :find  ?n ?a
-          :where [?e :aka "Max Otto von Stierlitz"]
-                 [?e :name ?n]
-                 [?e :age  ?a] ]
-       @conn))
+(rum/defc my-first-comp [text]
+  [:div text])
 
-(println "Hello world!")
+(rum/defc repeat-label [n text]
+  [:div (for [x (range n)]
+          [:div {:key x :class "label"} text])])
 
-(defn average [a b]
-  (/ (+ a b) 2.0))
+; (rum/mount (my-first-comp "Hello world!") (js/document.getElementById "app"))
+(rum/mount (repeat-label 5 "Hello world!") (js/document.getElementById "app"))
+
+(rum/defc label < rum/static [n text]
+  [:.label (vec (repeat n text))])
+
+(rum/mount (label 1 "abc") (js/document.getElementById "app"))
