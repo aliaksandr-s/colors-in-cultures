@@ -7,7 +7,9 @@
    :emotion/id {:db.unique :db.unique/identity}
    })
 
-(def conn (d/create-conn schema))
+(defonce conn (d/create-conn schema))
+
+(def app-state (atom {:selected-color "black"}))
 
 (def colors 
   [{:color/name "red"
@@ -38,7 +40,7 @@
 
 (def nations
   [{:nation/id   "A"
-    :nation/name "Western / American"}
+    :nation/name "Western American"}
    {:nation/id   "B"
     :nation/name "Japanese"}
    {:nation/id   "C"
@@ -62,23 +64,66 @@
   [
    {:emotion/id   "1"
     :emotion/name "Anger"
+    :emotion/icon "svg/001-superhero.svg" 
     :emotion/relations [[{:nation/id "A"} {:color/name "red"}] 
                         [{:nation/id "B"} {:color/name "red"}]
                         [{:nation/id "C"} {:color/name "black"}]
                         [{:nation/id "G"} {:color/name "red"}]
                         [{:nation/id "I"} {:color/name "red"}]]}
    {:emotion/id   "2"
-    :emotion/name "Art / Creativity"
+    :emotion/name "Creativity"
+    :emotion/icon "svg/002-courage.svg" 
     :emotion/relations [[{:nation/id "C"} {:color/name "blue"}]]}
    {:emotion/id   "3"
     :emotion/name "Authority"
+    :emotion/icon "svg/003-confusion.svg" 
     :emotion/relations [[{:nation/id "A"} {:color/name "black"}]]}
+   {:emotion/id   "4"
+    :emotion/name "Bad Luck"
+    :emotion/icon "svg/004-amazed.svg" 
+    :emotion/relations [[{:nation/id "B"} {:color/name "black"}]]}
+   {:emotion/id   "5"
+    :emotion/name "Balance"
+    :emotion/icon "svg/005-surprise.svg" 
+    :emotion/relations [[{:nation/id "B"} {:color/name "orange"}]
+                        [{:nation/id "D"} {:color/name "black"}]
+                        [{:nation/id "F"} {:color/name "green"}]]}
+   {:emotion/id   "6"
+    :emotion/name "Beauty"
+    :emotion/icon "svg/005-surprise.svg" 
+    :emotion/relations [[{:nation/id "A"} {:color/name "purple"}]]}
+   {:emotion/id   "7"
+    :emotion/name "Calm"
+    :emotion/icon "svg/006-excited.svg" 
+    :emotion/relations []}
+   {:emotion/id   "8"
+    :emotion/name "Celebration"
+    :emotion/icon "svg/008-stress.svg" 
+    :emotion/relations [[{:nation/id "B"} {:color/name "purple"}]
+                        [{:nation/id "E"} {:color/name "black"}]]}
+   {:emotion/id   "9"
+    :emotion/name "Children"
+    :emotion/icon "svg/009-anxious.svg" 
+    :emotion/relations [[{:nation/id "A"} {:color/name "pink"}]
+                        [{:nation/id "B"} {:color/name "pink"}]
+                        [{:nation/id "F"} {:color/name "white"}]]}
+   {:emotion/id   "10"
+    :emotion/name "Cold"
+    :emotion/icon "svg/010-nervous.svg" 
+    :emotion/relations [[{:nation/id "A"} {:color/name "blue"}]
+                        [{:nation/id "B"} {:color/name "blue"}]
+                        [{:nation/id "D"} {:color/name "blue"}]]}
    ])
 
+(def init-data [colors nations emotions])
 
-(d/transact! conn colors)
-(d/transact! conn nations)
-(d/transact! conn emotions)
+(defn load-db! [conn data]
+  (d/reset-conn! conn (d/empty-db schema))
+  (doseq [d data]
+    (d/transact! conn d)))
+
+
+(load-db! conn init-data)
 
 (defn get-colors []
   (->> (d/q '[:find [(pull ?color-e [:color/name :color/code]) ...]
@@ -87,6 +132,17 @@
        (sort-by :color/name)))
 
 (get-colors)
+
+(defn get-color-code [color-name]
+  (d/q '[:find ?color-code .
+         :in $ ?color-name
+         :where 
+         [?c-entity :color/name ?color-name]
+         [?c-entity :color/code ?color-code]]
+       @conn
+       color-name))
+
+(get-color-code "blue")
 
 (defn has-color? [relations color]
   (some (fn [rel] (= (-> rel second :color/name) color)) relations))
@@ -110,10 +166,11 @@
 
 
 (defn get-emotions-by-color [color]
-  (->> (d/q '[:find ?name ?nations 
+  (->> (d/q '[:find (pull ?entity [:emotion/name :emotion/id :emotion/icon]) ?nations 
               :in $ ?color ?has-color get-nations
               :where 
               [?entity :emotion/name ?name]
+              [?entity :emotion/id ?id]
               [?entity :emotion/relations ?rel]
               [(?has-color ?rel ?color) _]
               [(get-nations ?rel ?color) ?nations]]
@@ -125,7 +182,7 @@
                      (flatten (second %))))))
 
 
-(get-emotions-by-color "red")
+(get-emotions-by-color "black")
 
 ; (defn get-nations-list [nation-ids]
 ;   (d/q '[:find [?nation-name ...]

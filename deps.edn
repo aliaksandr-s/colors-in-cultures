@@ -3,4 +3,5 @@
          com.bhauman/figwheel-main {:mvn/version "0.2.3"}
          figwheel-sidecar          {:mvn/version "0.5.19"}
          rum                       {:mvn/version "0.11.4"}
+         clj-commons/cljss         {:mvn/version "1.6.4"}
          datascript                {:mvn/version "0.18.10"}}}
