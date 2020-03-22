@@ -33,31 +33,41 @@
    {:color/name "grey"
     :color/code "#b3b3b3"}
    {:color/name "silver"
-    :color/code "#999999"}
+    :color/code "#9cafbb"}
    {:color/name "black"
     :color/code "#000000"}])
 
 
 (def nations
   [{:nation/id   "A"
-    :nation/name "Western American"}
+    :nation/icon "svg/002-courage.svg"
+    :nation/name "West. American"}
    {:nation/id   "B"
+    :nation/icon "svg/002-courage.svg"
     :nation/name "Japanese"}
    {:nation/id   "C"
+    :nation/icon "svg/002-courage.svg"
     :nation/name "Hindu"}
    {:nation/id   "D"
+    :nation/icon "svg/002-courage.svg"
     :nation/name "Native American"}
    {:nation/id   "E"
+    :nation/icon "svg/002-courage.svg"
     :nation/name "Chinese"}
    {:nation/id   "F"
+    :nation/icon "svg/002-courage.svg"
     :nation/name "Asian"}
    {:nation/id   "G"
-    :nation/name "Easern European"}
+    :nation/icon "svg/002-courage.svg"
+    :nation/name "East. European"}
    {:nation/id   "H"
+    :nation/icon "svg/002-courage.svg"
     :nation/name "Arab"}
    {:nation/id   "I"
+    :nation/icon "svg/002-courage.svg"
     :nation/name "African"}
    {:nation/id   "J"
+    :nation/icon "svg/002-courage.svg"
     :nation/name "South American"}])
 
 (def emotions
@@ -127,8 +137,8 @@
 
 (defn get-colors []
   (->> (d/q '[:find [(pull ?color-e [:color/name :color/code]) ...]
-          :where [?color-e :color/name _]]
-        @conn)
+              :where [?color-e :color/name _]]
+            @conn)
        (sort-by :color/name)))
 
 (get-colors)
@@ -148,7 +158,7 @@
   (some (fn [rel] (= (-> rel second :color/name) color)) relations))
 
 (defn get-nation [nation-id]
-  (d/q '[:find [?nation-name ...]
+  (d/q '[:find (pull ?n-entity [:nation/name :nation/icon]) 
          :in $ ?nation-id
          :where 
          [?n-entity :nation/id ?nation-id]
@@ -182,7 +192,7 @@
                      (flatten (second %))))))
 
 
-(get-emotions-by-color "black")
+(get-emotions-by-color "red")
 
 ; (defn get-nations-list [nation-ids]
 ;   (d/q '[:find [?nation-name ...]

@@ -16,31 +16,30 @@
     {:css 
      {:width "50px"
       :height "50px"
+      :position "relative"
       :border "3px solid black"
-      ; :box-shadow (str "3px 3px black")
       :opacity (if selected? 1 0.5) 
-      ; :border-radius (if selected? "50%" "20%") 
       :border-radius "20%" 
       :cursor "pointer"
       :background-color (:color/code color)
       :&:hover {:opacity 1}
       :&:active {:transform "scale(0.9) translateX(5px) translateY(5px)"}
-      ; :-webkit-transition "opacity 200ms, transform 200ms"
-      ; :-webkit-transition "-webkit-transform 200ms"
-      :transition "transform 150ms"
+      :transform (if selected? "scale(0.9) translateX(5px) translateY(5px)")
+      :transition "all 150ms ease"
       :&:before {:content ""
                  :position "absolute"
+                 :left "-3px"
+                 :top "-3px"
                  :border-radius "20%" 
-                 :width "52px"
-                 :height "52px"
-                 :box-shadow (str "3px 3px black")
+                 :width "50px"
+                 :height "50px"
+                 :border "3px solid transparent"
+                 :box-shadow (str "2px 2px 0.5px black")
                  :transition "all 100ms"
-                 ; :transform "scale(0.9) translateX(5px) translateY(5px)"
-                 }
-      :&:active:before {
-                        :transform "translateX(-2px) translateY(-2px)"
-                        :visibility "hidden"}
-      }
+                 :transform (if selected? "translateX(-2px) translateY(-2px)")
+                 :visibility (if selected? "hidden")}
+      :&:active:before {:transform "translateX(-2px) translateY(-2px)"
+                        :visibility "hidden"} }
      :on-click on-click}]])
 
 

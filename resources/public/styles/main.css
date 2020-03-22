@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css?family=Baloo+Bhaina+2:400,500&display=swap');
+
 :root {
   --md-width: 960px;
 }
@@ -8,6 +10,9 @@ html, body {
   padding: 0;
   margin: 0;
   background-color: #f5eed2;
+  font-family: 'Baloo Bhaina 2', cursive;
+  line-height: 16px;
+  font-size: 16px;
 }
 
 /* #app { */

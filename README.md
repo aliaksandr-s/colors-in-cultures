@@ -32,3 +32,10 @@ clj -R:nrepl -m nrepl.cmdline --middleware "[cider.nrepl/cider-middleware cider.
 :CljEval (do (require 'figwheel.main.api) (figwheel.main.api/start "dev"))
 :CljEval (figwheel.main.api/cljs-repl "dev") 
 ```
+
+## To Do:
+
+1. Add "all button" to show all emotions
+2. Update icons 
+3. Add icons for nations
+4. Add game mode 
