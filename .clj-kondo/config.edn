@@ -1,0 +1,4 @@
+; {:linters {:unresolved-symbol {:level :off}}}
+{:linters
+  {:unresolved-symbol
+    {:exclude [(rum.core [defc defcs])]}}}

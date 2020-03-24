@@ -72,14 +72,16 @@
                        :height "180px"
                        :padding "10px"
                        :box-shadow (str "3px 3px" " " color)
-                       :transition "all 50ms"
-                       ; :transform (if @local-selected? "translateX(-2px) translateY(-2px)")
+                       :transition "all 100ms"
+                       :transform (if @local-selected? "translateX(-2px) translateY(-2px)")
+                       :opacity (if @local-selected? "0")
                        :visibility (if @local-selected? "hidden")
- 
-                       ; :transform (if selected? "translateX(-2px) translateY(-2px)")
-                       ; :visibility (if selected? "hidden")
                        }
-            }} 
+            ; :&:active:before {:transform "translateX(-2px) translateY(-2px)"
+            ;                   :visibility "hidden"
+            ;                   }
+            }
+           } 
      [:div {:css 
             {:text-align "center"
              :padding-top "6px"
