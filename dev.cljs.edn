@@ -1,4 +1,5 @@
 ^{:watch-dirs ["src"]
-  :css-dirs ["resources/public/styles"]}
+  :css-dirs ["resources/public/styles"]
+  :ring-handler colors-in-cultures.server/handler}
 
 {:main colors-in-cultures.core}
