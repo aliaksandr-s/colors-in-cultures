@@ -1,5 +1,6 @@
 (ns colors-in-cultures.db
-  (:require [datascript.core :as d]))
+  (:require [datascript.core :as d]
+            [clojure.string :as str]))
 
 (def schema 
   {:color/name {:db.unique :db.unique/identity}
@@ -174,6 +175,32 @@
             (-> rel first :nation/id get-nation))) 
         relations))
 
+(defn get-all-emotions []
+  (d/q '[:find (pull ?e [*])
+         :where
+         [?e :emotion/id]]
+       @conn))
+
+(get-all-emotions)
+
+(defn starts-with? [orig-str query]
+  (str/starts-with? 
+    (str/lower-case orig-str) 
+    (str/lower-case query)))
+
+
+(defn get-emotions-by-query [query]
+  (d/q '[:find (pull ?e [*])
+         :in $ ?query starts-with?
+         :where
+         [?e :emotion/name ?name]
+         [(starts-with? ?name ?query)]
+         ]
+       @conn
+       query
+       starts-with?))
+
+(get-emotions-by-query "a")
 
 (defn get-emotions-by-color [color]
   (->> (d/q '[:find (pull ?entity [:emotion/name :emotion/id :emotion/icon]) ?nations 
