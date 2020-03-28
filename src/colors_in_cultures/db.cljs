@@ -175,13 +175,13 @@
             (-> rel first :nation/id get-nation))) 
         relations))
 
-(defn get-all-emotions []
+(defn get-emotions []
   (d/q '[:find (pull ?e [*])
          :where
          [?e :emotion/id]]
        @conn))
 
-(get-all-emotions)
+(get-emotions)
 
 (defn starts-with? [orig-str query]
   (str/starts-with? 

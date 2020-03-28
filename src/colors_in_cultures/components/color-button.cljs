@@ -1,10 +1,8 @@
-(ns colors-in-cultures.components.color
+(ns colors-in-cultures.components.color-button
   (:require [rum.core :as rum]
-            [cljss.rum :refer-macros [defstyled]]
-            [colors-in-cultures.db :refer [conn get-colors app-state]]))
+            [cljss.rum :refer-macros [defstyled]]))
 
-
-(rum/defc color-select [color on-click selected?]
+(rum/defc color-button [color on-click selected?]
   [:div 
    [:div 
     {:css
@@ -41,35 +39,3 @@
       :&:active:before {:transform "translateX(-2px) translateY(-2px)"
                         :visibility "hidden"} }
      :on-click on-click}]])
-
-
-(rum/defc counter < rum/reactive []
-  [:div { :on-click (fn [_] (swap! app-state assoc :selected-color "red")) }
-    "Current color: " (rum/react (rum/cursor-in app-state [:selected-color]))])
-
-
-(rum/defc color-range < rum/reactive []
-  (let [colors (get-colors)
-        handle-select (fn [color] (swap! app-state assoc :selected-color (:color/name color)))
-        check-selected (fn [color] (= (:color/name color) 
-                                      (rum/react (rum/cursor-in app-state [:selected-color]))))]
-   [:div {:css
-          {:padding "20px"
-           ; :background-color "#dbeeff"
-           }}
-    [:div (counter)] 
-    [:div {:css
-           {:display "flex"
-            :flex-wrap "wrap"
-            :justify-content "center"
-            :max-width "var(--md-width)"
-            :margin "auto"
-            "> *" {:margin "10px"}}} 
-     (for [color colors]
-       (-> (color-select color 
-                         (fn [] (handle-select color)) 
-                         (check-selected color))
-           (rum/with-key (:color/name color))))]]))
-
-
-

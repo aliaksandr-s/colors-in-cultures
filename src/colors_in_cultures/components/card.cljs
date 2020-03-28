@@ -1,8 +1,7 @@
-(ns colors-in-cultures.components.emotion
+(ns colors-in-cultures.components.card
   (:require [rum.core :as rum]
             [cljss.rum :refer-macros [defstyled]]
-            [cljss.core :refer-macros [defkeyframes]]
-            [colors-in-cultures.db :refer [conn get-emotions-by-color app-state get-color-code]]))
+            [cljss.core :refer-macros [defkeyframes]]))
 
 (defkeyframes show []
   {:0%   {:opacity 0}
