@@ -16,6 +16,12 @@
 
 (defonce match (atom nil))
 
+(rum/defc container [content]
+  [:div {:css 
+         {:max-width "var(--md-width)"
+          :margin "auto auto"}} 
+   content])
+
 (rum/defc current-page < rum/reactive []
   (let [view (rum/react (rum/cursor-in match [:data :view]))]
    [:div
@@ -26,7 +32,7 @@
      [:li ]
      [:li [:a {:href (rfe/href ::library)} "Explore the library"]]
      ]
-    [:div (view)]]))
+    (container (view))]))
 
 
 (def routes

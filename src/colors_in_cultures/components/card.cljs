@@ -81,10 +81,11 @@
      [:div 
       (if @local-selected?
         [:div
-         {:style {:animation (str (show) " " "150ms ease 1")}}
+         ; {:style {:animation (str (show) " " "150ms ease 1")}}
          (nations-list info)]
         [:img {:src icon-url
                :style {:margin-top "15px"
-                       :animation (str (show) " " "150ms ease 1")}}])]
+                       ; :animation (str (show) " " "100ms ease 1")
+                       }}])]
      ]))
 

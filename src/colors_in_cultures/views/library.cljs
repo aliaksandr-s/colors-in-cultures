@@ -2,13 +2,15 @@
   (:require [rum.core :as rum]
             [colors-in-cultures.components.color-button :refer [color-button]]
             [colors-in-cultures.components.card :refer [card]]
+            [colors-in-cultures.components.search-bar :refer [search-bar]]
             [cljss.rum :refer-macros [defstyled]]
             [colors-in-cultures.db :refer [get-emotions get-color-code get-emotions-by-color get-colors app-state]]))
+
+(defonce state (atom {:search-query ""}))
 
 (rum/defc current-color < rum/reactive []
   [:div { :on-click (fn [_] (swap! app-state assoc :selected-color "red")) }
     "Current color: " (rum/react (rum/cursor-in app-state [:selected-color]))])
-
 
 (rum/defc color-range < rum/reactive []
   (let [colors (get-colors)
@@ -33,12 +35,24 @@
                          (check-selected color))
            (rum/with-key (:color/name color))))]]))
 
+(rum/defc search []
+  (let [handle-search (fn [query] (swap! state assoc :search-query query))]
+    [:div {:css 
+           {:display "flex"
+            :justify-content "center"
+            :position "sticky"
+            :top "0px"
+            :padding "10px"
+            :z-index "10"
+            :background-color "var(--main-color)"}} 
+     (search-bar handle-search)]))
 
 (rum/defc emotions-list < rum/reactive []
   (let [color (rum/react (rum/cursor-in app-state [:selected-color]))
         color-code (get-color-code color)
-        emotions (get-emotions-by-color color)
-        ; emotions (get-emotions)
+        ; emotions (get-emotions-by-color color)
+        query (rum/react (rum/cursor-in state [:search-query])) 
+        emotions (get-emotions query)
         ]
     [:div
      {:css
@@ -57,6 +71,7 @@
   (let [color (rum/react (rum/cursor-in app-state [:selected-color]))
         color-code (get-color-code color)]
    [:div 
-    (color-range) 
+    (search)
+    ; (color-range) 
     (emotions-list)
     ]))
