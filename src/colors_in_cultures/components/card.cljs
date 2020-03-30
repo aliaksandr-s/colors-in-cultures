@@ -37,7 +37,7 @@
        ]])])
 
 (rum/defcs card < (rum/local false ::selected?)
-  [state title icon-url info color]
+  [state title icon-url back-side color]
   (let [local-selected? (::selected? state)]
     [:div {:on-click (fn [_] (swap! local-selected? not)) 
            :css 
@@ -82,7 +82,9 @@
       (if @local-selected?
         [:div
          ; {:style {:animation (str (show) " " "150ms ease 1")}}
-         (nations-list info)]
+         ; (nations-list info)
+         back-side
+         ]
         [:img {:src icon-url
                :style {:margin-top "15px"
                        ; :animation (str (show) " " "100ms ease 1")

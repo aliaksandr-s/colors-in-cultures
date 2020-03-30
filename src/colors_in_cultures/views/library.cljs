@@ -63,7 +63,8 @@
      (for [entity emotions]
        (-> (card (:emotion/name (first entity)) 
                  (:emotion/icon (first entity))
-                 (second entity)
+                 [:div "hi"]
+                 ; (second entity)
                  color-code)
            (rum/with-key (:emotion/id (first entity)))))]))
 
