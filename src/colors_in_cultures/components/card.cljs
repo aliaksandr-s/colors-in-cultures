@@ -42,9 +42,9 @@
     [:div {:on-click (fn [_] (swap! local-selected? not)) 
            :css 
            {:padding "10px"
-            :margin "5px"
-            :width "110px"
-            :height "180px"
+            :user-select "none" 
+            :width "120px"
+            :height "195px"
             :position "relative"
             :font-size "16px"
             :display "inline-block"
@@ -54,7 +54,7 @@
             :cursor "pointer"
             :opacity (if @local-selected? 1 0.7)
             :&:hover {:opacity 1}
-            :transition "all 150ms ease"
+            :transition "all 200ms ease"
             :transform (if @local-selected? "translateX(5px) translateY(5px)")
             :&:before {:content ""
                        :position "absolute"
@@ -62,12 +62,12 @@
                        :left "-3px"
                        :border "3px solid black" 
                        :border-radius "15%" 
-                       :width "110px"
-                       :height "180px"
+                       :width "120px"
+                       :height "195px"
                        :padding "10px"
-                       :box-shadow (str "3px 3px" " " color)
+                       :box-shadow (str "2px 2px" " " "black")
                        :transition "all 100ms"
-                       :transform (if @local-selected? "translateX(-2px) translateY(-2px)")
+                       :transform (if @local-selected? "translateX(-1px) translateY(-1px)")
                        :opacity (if @local-selected? "0")
                        :visibility (if @local-selected? "hidden")
                        }}} 
@@ -76,7 +76,8 @@
              :padding-top "6px"
              :font-size "18px"
              :font-weight "500"
-             :padding-bottom "6px"}} 
+             ; :padding-bottom "6px"
+             }} 
       title]
      [:div 
       (if @local-selected?
@@ -86,7 +87,7 @@
          back-side
          ]
         [:img {:src icon-url
-               :style {:margin-top "15px"
+               :style {:margin-top "25px"
                        ; :animation (str (show) " " "100ms ease 1")
                        }}])]
      ]))

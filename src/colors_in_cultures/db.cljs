@@ -8,7 +8,6 @@
 
 (def app-state (atom {:selected-color "black"}))
 
-
 (defn load-db! [conn data]
   (d/reset-conn! conn (d/empty-db schema))
   (doseq [d data]
@@ -39,7 +38,7 @@
   (some (fn [rel] (= (-> rel second :color/name) color)) relations))
 
 (defn get-nation [nation-id]
-  (d/q '[:find (pull ?e [*]) 
+  (d/q '[:find (pull ?e [*]) .
          :in $ ?nation-id
          :where 
          [?e :nation/id ?nation-id]]
@@ -49,7 +48,7 @@
 (get-nation "A")
 
 (defn get-color [color-name]
-  (d/q '[:find (pull ?e [*]) 
+  (d/q '[:find (pull ?e [*]) .
          :in $ ?color-name
          :where 
          [?e :color/name ?color-name]]
@@ -65,52 +64,32 @@
         relations))
 
 (defn transform-relations [relations]
-  (map #(vector (-> (first %) :nation/id get-nation) 
-                (-> (second %) :color/name get-color)) 
+  (map #(vector (-> (first %) get-nation) 
+                (-> (second %) get-color)) 
        relations))
 
-(transform-relations [[{:nation/id "B"} {:color/name "purple"}]
-                        [{:nation/id "E"} {:color/name "black"}]])
-
-(defn get-all-emotions []
-  (d/q '[:find (pull ?e [:emotion/id :emotion/name :emotion/icon]) ?transformed-rel
-         :in $ transform-relations
-         :where
-         [?e :emotion/id]
-         [?e :emotion/relations ?rel]
-         [(transform-relations ?rel) ?transformed-rel]
-         ]
-       @conn
-       transform-relations))
-
-(get-all-emotions)
+(transform-relations [["B" "purple"]
+                      ["E" "black"]])
 
 (defn starts-with? [orig-str query]
   (str/starts-with? 
     (str/lower-case orig-str) 
     (str/lower-case query)))
 
-
-(defn get-emotions-by-query [query]
-  (d/q '[:find (pull ?e [:emotion/id :emotion/name :emotion/icon]) ?transformed-rel
-         :in $ ?query starts-with? transform-relations
-         :where
-         [?e :emotion/name ?name]
-         [?e :emotion/relations ?rel]
-         [(starts-with? ?name ?query)]
-         [(transform-relations ?rel) ?transformed-rel]
-         ]
-       @conn
-       query
-       starts-with?
-       transform-relations))
-
-(get-emotions-by-query "a")
-
 (defn get-emotions [query]
-  (if (empty? query)
-    (get-all-emotions)
-    (get-emotions-by-query query)))
+  (->> (d/q '[:find (pull ?e [:emotion/id :emotion/name :emotion/icon]) ?transformed-rel 
+          :in $ ?query starts-with? transform-relations
+          :where
+          [?e :emotion/name ?name]
+          [?e :emotion/relations ?rel]
+          [(starts-with? ?name ?query)]
+          [(transform-relations ?rel) ?transformed-rel]
+          ]
+        @conn
+        query
+        starts-with?
+        transform-relations)
+       (sort-by #(-> % first :emotion/name))))
 
 (get-emotions "a")
 

@@ -47,9 +47,38 @@
             :background-color "var(--main-color)"}} 
      (search-bar handle-search)]))
 
+(rum/defc nations-list [nations-colors]
+  [:div {:css 
+         {:display "flex"
+          :flex-direction "column"
+          :margin-top "10px"}} 
+   (for [nat-col nations-colors]
+     (let [nation (first nat-col)
+           color (second nat-col)]
+       [:div {:key (:nation/name nation)
+              :css
+              {:margin-bottom "8px"}} 
+        [:div {:css
+               {:display "flex"
+                :align-items "center"}}
+         [:div {:css 
+                {:width "14px"
+                 :height "11px"
+                 :border-radius "4px"
+                 :background-color (:color/code color)}
+                :title (:color/name color)}]
+         [:span
+          {:css
+           {:margin-left "8px"
+            :font-size "13px"
+            :width "100%"}}
+          (:nation/name nation)]
+         ]]))])
+
 (rum/defc emotions-list < rum/reactive []
-  (let [color (rum/react (rum/cursor-in app-state [:selected-color]))
-        color-code (get-color-code color)
+  (let [
+        ; color (rum/react (rum/cursor-in app-state [:selected-color]))
+        ; color-code (get-color-code color)
         ; emotions (get-emotions-by-color color)
         query (rum/react (rum/cursor-in state [:search-query])) 
         emotions (get-emotions query)
@@ -59,13 +88,17 @@
       {:padding-top "30px"
        :display "flex"
        :flex-wrap "wrap"
-       :justify-content "center"}}
+       :justify-content "center"
+       "> *" {:margin "8px"}
+       }}
      (for [entity emotions]
        (-> (card (:emotion/name (first entity)) 
                  (:emotion/icon (first entity))
-                 [:div "hi"]
+                 (nations-list (second entity))
+                 ; [:div "hi"]
                  ; (second entity)
-                 color-code)
+                 ; color-code
+                 )
            (rum/with-key (:emotion/id (first entity)))))]))
 
 (rum/defc library < rum/reactive []

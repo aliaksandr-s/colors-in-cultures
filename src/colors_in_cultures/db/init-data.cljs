@@ -1,9 +1,18 @@
 (ns colors-in-cultures.db.init-data)
 
+; (def schema 
+;   {:color/name {:db.unique :db.unique/identity}
+;    :nation/id {:db.unique :db.unique/identity}
+;    :emotion/id {:db.unique :db.unique/identity}
+;    })
+
 (def schema 
-  {:color/name {:db.unique :db.unique/identity}
-   :nation/id {:db.unique :db.unique/identity}
-   :emotion/id {:db.unique :db.unique/identity}
+  {:color/name        {:db/unique :db.unique/identity}
+
+   :nation/id         {:db/unique :db.unique/identity}
+
+   :emotion/id        {:db/unique :db.unique/identity}
+   ; :emotion/relations {:db/cardinality :db.cardinality/many}
    })
 
 (def colors 
@@ -69,54 +78,94 @@
    {:emotion/id   "1"
     :emotion/name "Anger"
     :emotion/icon "svg/001-superhero.svg" 
-    :emotion/relations [[{:nation/id "A"} {:color/name "red"}] 
-                        [{:nation/id "B"} {:color/name "red"}]
-                        [{:nation/id "C"} {:color/name "black"}]
-                        [{:nation/id "G"} {:color/name "red"}]
-                        [{:nation/id "I"} {:color/name "red"}]]}
+    :emotion/relations [["A" "red"] 
+                        ["B" "red"]
+                        ["C" "black"]
+                        ["G" "red"]
+                        ["I" "red"]]}
    {:emotion/id   "2"
     :emotion/name "Creativity"
     :emotion/icon "svg/002-courage.svg" 
-    :emotion/relations [[{:nation/id "C"} {:color/name "blue"}]]}
+    :emotion/relations [["C" "blue"]]}
    {:emotion/id   "3"
     :emotion/name "Authority"
     :emotion/icon "svg/003-confusion.svg" 
-    :emotion/relations [[{:nation/id "A"} {:color/name "black"}]]}
+    :emotion/relations [["A" "black"]]}
    {:emotion/id   "4"
     :emotion/name "Bad Luck"
     :emotion/icon "svg/004-amazed.svg" 
-    :emotion/relations [[{:nation/id "B"} {:color/name "black"}]]}
+    :emotion/relations [["B" "black"]]}
    {:emotion/id   "5"
     :emotion/name "Balance"
     :emotion/icon "svg/005-surprise.svg" 
-    :emotion/relations [[{:nation/id "B"} {:color/name "orange"}]
-                        [{:nation/id "D"} {:color/name "black"}]
-                        [{:nation/id "F"} {:color/name "green"}]]}
+    :emotion/relations [["B" "orange"]
+                        ["D" "black"]
+                        ["F" "green"]]}
    {:emotion/id   "6"
     :emotion/name "Beauty"
     :emotion/icon "svg/005-surprise.svg" 
-    :emotion/relations [[{:nation/id "A"} {:color/name "purple"}]]}
-   {:emotion/id   "7"
-    :emotion/name "Calm"
-    :emotion/icon "svg/006-excited.svg" 
-    :emotion/relations []}
+    :emotion/relations [["A" "purple"]]}
+   ; {:emotion/id   "7"
+   ;  :emotion/name "Calm"
+   ;  :emotion/icon "svg/006-excited.svg" 
+   ;  :emotion/relations []}
    {:emotion/id   "8"
     :emotion/name "Celebration"
     :emotion/icon "svg/008-stress.svg" 
-    :emotion/relations [[{:nation/id "B"} {:color/name "purple"}]
-                        [{:nation/id "E"} {:color/name "black"}]]}
+    :emotion/relations [["B" "purple"]
+                        ["E" "black"]]}
    {:emotion/id   "9"
     :emotion/name "Children"
     :emotion/icon "svg/009-anxious.svg" 
-    :emotion/relations [[{:nation/id "A"} {:color/name "pink"}]
-                        [{:nation/id "B"} {:color/name "pink"}]
-                        [{:nation/id "F"} {:color/name "white"}]]}
+    :emotion/relations [["A" "pink"]
+                        ["B" "pink"]
+                        ["F" "white"]]}
    {:emotion/id   "10"
     :emotion/name "Cold"
     :emotion/icon "svg/010-nervous.svg" 
-    :emotion/relations [[{:nation/id "A"} {:color/name "blue"}]
-                        [{:nation/id "B"} {:color/name "blue"}]
-                        [{:nation/id "D"} {:color/name "blue"}]]}
+    :emotion/relations [["A" "blue"]
+                        ["B" "blue"]
+                        ["D" "blue"]]}
+   {:emotion/id   "11"
+    :emotion/name "Compassion"
+    :emotion/icon "svg/011-shy.svg" 
+    :emotion/relations []}
+   {:emotion/id   "12"
+    :emotion/name "Courage"
+    :emotion/icon "svg/011-shy.svg" 
+    :emotion/relations []}
+   {:emotion/id   "13"
+    :emotion/name "Cowardice"
+    :emotion/icon "svg/011-shy.svg" 
+    :emotion/relations []}
+   {:emotion/id   "14"
+    :emotion/name "Cruelty"
+    :emotion/icon "svg/011-shy.svg" 
+    :emotion/relations []}
+   {:emotion/id   "15"
+    :emotion/name "Danger"
+    :emotion/icon "svg/011-shy.svg" 
+    :emotion/relations []}
+   {:emotion/id   "16"
+    :emotion/name "Death"
+    :emotion/icon "svg/011-shy.svg" 
+    :emotion/relations []}
+   {:emotion/id   "17"
+    :emotion/name "Decadence"
+    :emotion/icon "svg/011-shy.svg" 
+    :emotion/relations []}
+   {:emotion/id   "18"
+    :emotion/name "Deceit"
+    :emotion/icon "svg/011-shy.svg" 
+    :emotion/relations []}
+   {:emotion/id   "19"
+    :emotion/name "Desire"
+    :emotion/icon "svg/011-shy.svg" 
+    :emotion/relations []}
+   {:emotion/id   "20"
+    :emotion/name "Earthy"
+    :emotion/icon "svg/011-shy.svg" 
+    :emotion/relations []}
    ])
 
 (def init-data [colors nations emotions])
