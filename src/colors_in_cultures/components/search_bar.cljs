@@ -3,7 +3,7 @@
             [cljss.rum :refer-macros [defstyled]]))
 
 (rum/defc search-bar [on-select]
-  [:input {:type "search"
+  [:input {:type "text"
            :placeholder "Search..."
            ; :on-change (fn [e] (println (-> e .-target .-value)))
            :on-change (fn [e] (on-select (-> e .-target .-value)))

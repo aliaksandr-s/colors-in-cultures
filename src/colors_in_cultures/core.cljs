@@ -5,7 +5,7 @@
             [reitit.frontend.easy :as rfe]
             [reitit.coercion.spec :as rss]
             [colors-in-cultures.views.library :refer [library]]
-            [colors-in-cultures.db :refer [get-colors get-color-code app-state]]))
+            [colors-in-cultures.views.frontpage :refer [frontpage]]))
 
 
 ; (rum/defc library []
@@ -24,21 +24,12 @@
 
 (rum/defc current-page < rum/reactive []
   (let [view (rum/react (rum/cursor-in match [:data :view]))]
-   [:div
-    [:ul
-     [:li [:a {:href (rfe/href ::frontpage)} "Back"]]
-     [:li ]
-     [:li [:a {:href (rfe/href ::game)} "Start"]]
-     [:li ]
-     [:li [:a {:href (rfe/href ::library)} "Explore the library"]]
-     ]
-    (container (view))]))
-
+    (container (view))))
 
 (def routes
   [["/"
     {:name ::frontpage
-     :view library}]
+     :view frontpage}]
 
    ["/library"
     {:name ::library

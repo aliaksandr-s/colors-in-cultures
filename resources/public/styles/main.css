@@ -3,6 +3,7 @@
 :root {
   --md-width: 960px;
   --main-color: #f5eed2;
+  --accent-color: #e3deca;
 }
 
 html, body {
@@ -11,9 +12,13 @@ html, body {
   padding: 0;
   margin: 0;
   background-color: #f5eed2;
-  font-family: 'Baloo Bhaina 2', cursive;
-  line-height: 16px;
+  font-family: 'Baloo Bhaina 2', Helvetica;
+  line-height: 32px;
   font-size: 16px;
+}
+
+h1, h2, h3, h4 {
+  /* line-height: 28px; */
 }
 
 /* #app { */

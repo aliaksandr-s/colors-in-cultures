@@ -4,39 +4,43 @@
             [colors-in-cultures.components.card :refer [card]]
             [colors-in-cultures.components.search-bar :refer [search-bar]]
             [cljss.rum :refer-macros [defstyled]]
-            [colors-in-cultures.db :refer [get-emotions get-color-code get-emotions-by-color get-colors app-state]]))
+            [colors-in-cultures.utils :refer [debounce]]
+            [colors-in-cultures.db.query :refer [get-emotions get-color-code get-emotions-by-color get-colors]]))
 
 (defonce state (atom {:search-query ""}))
 
-(rum/defc current-color < rum/reactive []
-  [:div { :on-click (fn [_] (swap! app-state assoc :selected-color "red")) }
-    "Current color: " (rum/react (rum/cursor-in app-state [:selected-color]))])
+; (def app-state (atom {:selected-color "black"}))
 
-(rum/defc color-range < rum/reactive []
-  (let [colors (get-colors)
-        handle-select (fn [color] (swap! app-state assoc :selected-color (:color/name color)))
-        check-selected (fn [color] (= (:color/name color) 
-                                      (rum/react (rum/cursor-in app-state [:selected-color]))))]
-   [:div {:css
-          {:padding "20px"
-           ; :background-color "#dbeeff"
-           }}
-    [:div (current-color)] 
-    [:div {:css
-           {:display "flex"
-            :flex-wrap "wrap"
-            :justify-content "center"
-            :max-width "var(--md-width)"
-            :margin "auto"
-            "> *" {:margin "10px"}}} 
-     (for [color colors]
-       (-> (color-button color 
-                         (fn [] (handle-select color)) 
-                         (check-selected color))
-           (rum/with-key (:color/name color))))]]))
+; (rum/defc current-color < rum/reactive []
+;   [:div { :on-click (fn [_] (swap! app-state assoc :selected-color "red")) }
+;     "Current color: " (rum/react (rum/cursor-in app-state [:selected-color]))])
+
+; (rum/defc color-range < rum/reactive []
+;   (let [colors (get-colors)
+;         handle-select (fn [color] (swap! app-state assoc :selected-color (:color/name color)))
+;         check-selected (fn [color] (= (:color/name color) 
+;                                       (rum/react (rum/cursor-in app-state [:selected-color]))))]
+;    [:div {:css
+;           {:padding "20px"
+;            ; :background-color "#dbeeff"
+;            }}
+;     [:div (current-color)] 
+;     [:div {:css
+;            {:display "flex"
+;             :flex-wrap "wrap"
+;             :justify-content "center"
+;             :max-width "var(--md-width)"
+;             :margin "auto"
+;             "> *" {:margin "10px"}}} 
+;      (for [color colors]
+;        (-> (color-button color 
+;                          (fn [] (handle-select color)) 
+;                          (check-selected color))
+;            (rum/with-key (:color/name color))))]]))
 
 (rum/defc search []
-  (let [handle-search (fn [query] (swap! state assoc :search-query query))]
+  (let [handle-search (fn [query] (swap! state assoc :search-query query))
+        debounced-search (debounce handle-search 10)]
     [:div {:css 
            {:display "flex"
             :justify-content "center"
@@ -45,13 +49,14 @@
             :padding "10px"
             :z-index "10"
             :background-color "var(--main-color)"}} 
-     (search-bar handle-search)]))
+     (search-bar debounced-search)]))
 
 (rum/defc nations-list [nations-colors]
   [:div {:css 
          {:display "flex"
           :flex-direction "column"
-          :margin-top "10px"}} 
+          :line-height "14px"
+          :margin-top "16px"}} 
    (for [nat-col nations-colors]
      (let [nation (first nat-col)
            color (second nat-col)]
@@ -102,8 +107,10 @@
            (rum/with-key (:emotion/id (first entity)))))]))
 
 (rum/defc library < rum/reactive []
-  (let [color (rum/react (rum/cursor-in app-state [:selected-color]))
-        color-code (get-color-code color)]
+  (let [
+        ; color (rum/react (rum/cursor-in app-state [:selected-color]))
+        ; color-code (get-color-code color)
+        ]
    [:div 
     (search)
     ; (color-range) 
