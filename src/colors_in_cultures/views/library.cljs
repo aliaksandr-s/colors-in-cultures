@@ -5,7 +5,9 @@
             [colors-in-cultures.components.search-bar :refer [search-bar]]
             [cljss.rum :refer-macros [defstyled]]
             [colors-in-cultures.utils :refer [debounce]]
-            [colors-in-cultures.db.query :refer [get-emotions get-color-code get-emotions-by-color get-colors]]))
+            [colors-in-cultures.db.query :refer [get-emotions get-color-code 
+                                                 ; get-emotions-by-color 
+                                                 get-colors]]))
 
 (defonce state (atom {:search-query ""}))
 

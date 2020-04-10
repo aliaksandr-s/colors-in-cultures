@@ -79,23 +79,40 @@
         transform-relations)
        (sort-by #(-> % first :emotion/name))))
 
-; (get-emotions "a")
+(get-emotions "a")
 
-(defn get-emotions-by-color [color]
-  (->> (d/q '[:find (pull ?entity [:emotion/name :emotion/id :emotion/icon]) ?nations 
-              :in $ ?color ?has-color get-nations
-              :where 
-              [?entity :emotion/name ?name]
-              [?entity :emotion/id ?id]
-              [?entity :emotion/relations ?rel]
-              [(?has-color ?rel ?color) _]
-              [(get-nations ?rel ?color) ?nations]]
-            @conn
-            color
-            has-color?
-            get-nations)
-       (map #(vector (first %) 
-                     (flatten (second %))))))
+(defn game-seq []
+  (->> (get-emotions "")
+       shuffle
+       (map (fn [el] 
+              (let [random-rel (->> el second shuffle)
+                    nation (ffirst random-rel) 
+                    correct-color (->> random-rel first second)
+                    colors-without-correct (->> (get-colors)
+                                                (filter #(not= (:color/name %) (:color/name correct-color))))]
+                {:emotion (first el)
+                 :nation nation
+                 :correct-color correct-color
+                 :colors colors-without-correct})))
+       ))
+
+(take 1 (game-seq))
+
+; (defn get-emotions-by-color [color]
+;   (->> (d/q '[:find (pull ?entity [:emotion/name :emotion/id :emotion/icon]) ?nations 
+;               :in $ ?color ?has-color get-nations
+;               :where 
+;               [?entity :emotion/name ?name]
+;               [?entity :emotion/id ?id]
+;               [?entity :emotion/relations ?rel]
+;               [(?has-color ?rel ?color) _]
+;               [(get-nations ?rel ?color) ?nations]]
+;             @conn
+;             color
+;             has-color?
+;             get-nations)
+;        (map #(vector (first %) 
+;                      (flatten (second %))))))
 
 
 ; (get-emotions-by-color "red")
