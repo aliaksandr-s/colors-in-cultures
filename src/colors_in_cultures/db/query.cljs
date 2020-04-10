@@ -79,11 +79,12 @@
         transform-relations)
        (sort-by #(-> % first :emotion/name))))
 
-(get-emotions "a")
+; (get-emotions "a")
 
-(defn game-seq []
+(defn game-seq [n]
   (->> (get-emotions "")
        shuffle
+       (take n)
        (map (fn [el] 
               (let [random-rel (->> el second shuffle)
                     nation (ffirst random-rel) 
@@ -96,7 +97,8 @@
                  :colors colors-without-correct})))
        ))
 
-(take 1 (game-seq))
+; (take 1 (game-seq))
+; (game-seq 1)
 
 ; (defn get-emotions-by-color [color]
 ;   (->> (d/q '[:find (pull ?entity [:emotion/name :emotion/id :emotion/icon]) ?nations 
