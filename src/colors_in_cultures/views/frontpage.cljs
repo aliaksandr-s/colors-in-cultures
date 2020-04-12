@@ -7,11 +7,10 @@
 (rum/defc frontpage [] 
   [:div 
    {:css
-    {:height "100vh"
+    {:margin-top "10%"
      :display "flex"
      :flex-direction "column"
-     :align-items "center"
-     :justify-content "center"}}
+     :align-items "center"}}
    [:h1 
     [:span "Emotions"]
     [:span "."]

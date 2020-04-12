@@ -5,8 +5,7 @@
 (rum/defc button [title color on-click]
   [:button 
    {:css 
-    {
-     :min-width "100px"
+    {:min-width "100px"
      :text-align "center"
      :font-weight "600"
      :font-size "18px"

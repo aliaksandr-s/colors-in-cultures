@@ -5,14 +5,9 @@
             [reitit.frontend.easy :as rfe]
             [reitit.coercion.spec :as rss]
             [colors-in-cultures.views.library :refer [library]]
-            [colors-in-cultures.views.frontpage :refer [frontpage]]))
-
-
-; (rum/defc library []
-;   [:div "LIBRARY"])
-
-(rum/defc game []
-  [:div "GAME"])
+            [colors-in-cultures.views.frontpage :refer [frontpage]]
+            [colors-in-cultures.views.game :refer [game]]
+            ))
 
 (defonce match (atom nil))
 

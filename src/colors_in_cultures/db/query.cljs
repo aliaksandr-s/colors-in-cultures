@@ -88,14 +88,10 @@
        (map (fn [el] 
               (let [random-rel (->> el second shuffle)
                     nation (ffirst random-rel) 
-                    correct-color (->> random-rel first second)
-                    colors-without-correct (->> (get-colors)
-                                                (filter #(not= (:color/name %) (:color/name correct-color))))]
+                    correct-color (->> random-rel first second)]
                 {:emotion (first el)
                  :nation nation
-                 :correct-color correct-color
-                 :colors colors-without-correct})))
-       ))
+                 :correct-color correct-color})))))
 
 ; (take 1 (game-seq))
 ; (game-seq 1)
