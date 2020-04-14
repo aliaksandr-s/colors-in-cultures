@@ -2,9 +2,10 @@
   (:require [rum.core :as rum]
             [cljss.rum :refer-macros [defstyled]]))
 
-(rum/defc search-bar [on-select]
-  [:input {:type "text"
+(rum/defc search-bar [on-select value]
+  [:input {:type "search"
            :placeholder "Search..."
+           :value value
            ; :on-change (fn [e] (println (-> e .-target .-value)))
            :on-change (fn [e] (on-select (-> e .-target .-value)))
            :css {

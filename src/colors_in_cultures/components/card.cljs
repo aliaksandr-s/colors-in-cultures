@@ -11,9 +11,9 @@
    :100% {:opacity 1}})
 
 (rum/defcs card < (rum/local false ::selected?)
-  [state title icon-url back-side color]
+  [state title icon-url back-side]
   (let [local-selected? (::selected? state)]
-    [:div {:on-click (fn [_] (swap! local-selected? not)) 
+    [:div {:on-click (when back-side (fn [_] (swap! local-selected? not))) 
            :css 
            {:padding "10px"
             :user-select "none" 

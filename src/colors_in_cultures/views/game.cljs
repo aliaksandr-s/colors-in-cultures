@@ -2,6 +2,7 @@
   (:require [rum.core :as rum]
             [cljss.rum :refer-macros [defstyled]]
             [colors-in-cultures.components.color-button :refer [color-button]]
+            [colors-in-cultures.components.card :refer [card]]
             [colors-in-cultures.db.query :refer [game-seq get-colors]]))
 
 (def number-of-questions 10)
@@ -11,19 +12,11 @@
 (defonce state (atom {:score 0
                       :question-number 0
                       :game-seq (game-seq number-of-questions)}))
-; (def *a (atom 0))
-; (def *b (atom 1))
-; (def *x (derived-atom [*a *b] ::key
-;           (fn [a b]
-;             (str a ":" b))))
 
 (def current-question 
   (rum/derived-atom [state] ::cur-question
                 (fn [state]
                   (nth (:game-seq state) (:question-number state)))))
-
-; (str @current-question)
-; (def current-question (nth (:game-seq @state) (:question-number @state)))
 
 (defn prep-colors-to-select-from [colors correct-color n]
   (->> colors
@@ -37,8 +30,21 @@
   (println correct selected)
   (when (= correct selected) (swap! state update-in [:score] #(+ % points-reward))))
 
-; (inc 2)
-; (prep-colors-to-select-from (get-colors) {:color/name "red"} 5)
+(rum/defc double-card [emotion nation]
+  [:div 
+   {:css
+    {:display "flex"
+     :justify-content "center"
+     :align-items "center" 
+     :position "relative"
+     :width "400px"
+     :height "300px"
+     "> *" {:position "absolute !important" 
+            :opacity "1 !important"}
+     "> :first-child" {:transform "translateX(-75px) rotate(-20deg)"}
+     "> :last-child"  {:transform "translateX(75px) rotate(26deg)"}}}
+   (card (:emotion/name emotion) (:emotion/icon emotion))
+   (card (:nation/name nation) (:nation/icon nation))])
 
 (rum/defc color-range [colors]
   [:div {:css
@@ -60,7 +66,7 @@
                               (update-score (get-in @current-question [:correct-color :color/name])
                                             (:color/name color))
                               (swap! state update-in [:question-number] inc)) 
-                            1000)
+                            500)
                           ; (update-score (get-in @current-question [:correct-color :color/name])
                           ;               (:color/name color))
                           ; (swap! state update-in [:question-number] inc)
@@ -81,15 +87,19 @@
     [:div 
      [:div {:css {:color "red"}} (str "Question: " (+ 1 qustion-number))]
      [:div {:css {:color "green"}} (str "Score: " score)]
-     [:div (str "Correct: " (get-in current-question [:correct-color :color/name]))]
+     ; [:div (str "Correct: " (get-in current-question [:correct-color :color/name]))]
      ; [:div (str colors)]
      ; [:div (str current-question)]
      [:div 
-      [:div (get-in current-question [:emotion :emotion/name])]
-      [:div (get-in current-question [:nation :nation/name])]]
+      {:css {:display "flex"
+             :justify-content "center"}}
+      (double-card 
+        (:emotion current-question)
+        (:nation current-question))
+      ; [:div (get-in current-question [:emotion :emotion/name])]
+      ; [:div (get-in current-question [:nation :nation/name])]
+      ]
      [:div (color-range colors)]
-     
-     [:div (color-button {:color/code "red"} #(println "hi") false)]
      ]))
 
 
@@ -110,6 +120,13 @@
   [:div 
    {:css {:padding "10px"}}
    (qustion)
+   ; [:div (color-button {:color/code "red"} #(println "hi") false)]
+   [:div 
+    {:css 
+     {:padding "80px"
+      :padding-left "200px"}}
+    ; (double-card)
+    ]
    ; (prev-button)
    ; [:div]
    ; (next-button)
