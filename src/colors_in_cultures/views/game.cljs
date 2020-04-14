@@ -5,13 +5,13 @@
             [colors-in-cultures.components.card :refer [card]]
             [colors-in-cultures.db.query :refer [game-seq get-colors]]))
 
-(def number-of-questions 10)
+(def total-questions 10)
 (def color-choices 4)
 (def points-reward 10)
 
 (defonce state (atom {:score 0
                       :question-number 0
-                      :game-seq (game-seq number-of-questions)}))
+                      :game-seq (game-seq total-questions)}))
 
 (def current-question 
   (rum/derived-atom [state] ::cur-question
@@ -75,32 +75,16 @@
                         false)
           (rum/with-key (:color/name color))))]])
 
+(rum/defc status-line [total-questions question-number score]
+  [:div
+   {:css 
+    {:display "flex"
+     :justify-content "space-between"
+     :font-size "20px"
+     :font-weight "500"}}
+   [:div (str "Question: " (+ 1 question-number) "/" total-questions)]
+   [:div (str "Score: " score)]])
 
-(rum/defc qustion < rum/reactive []
-  (let [qustion-number (rum/react (rum/cursor-in state [:question-number]))
-        score (rum/react (rum/cursor-in state [:score]))
-        current-question (nth (:game-seq @state) qustion-number)
-        colors (prep-colors-to-select-from (get-colors) 
-                                           (:correct-color current-question) 
-                                           color-choices)
-        ]
-    [:div 
-     [:div {:css {:color "red"}} (str "Question: " (+ 1 qustion-number))]
-     [:div {:css {:color "green"}} (str "Score: " score)]
-     ; [:div (str "Correct: " (get-in current-question [:correct-color :color/name]))]
-     ; [:div (str colors)]
-     ; [:div (str current-question)]
-     [:div 
-      {:css {:display "flex"
-             :justify-content "center"}}
-      (double-card 
-        (:emotion current-question)
-        (:nation current-question))
-      ; [:div (get-in current-question [:emotion :emotion/name])]
-      ; [:div (get-in current-question [:nation :nation/name])]
-      ]
-     [:div (color-range colors)]
-     ]))
 
 
 
@@ -116,10 +100,49 @@
      {:on-click handle-click}
      "prev"]))
 
-(rum/defc game []
+(rum/defc game  < rum/reactive []
+  (let [question-number (rum/react (rum/cursor-in state [:question-number]))
+        score (rum/react (rum/cursor-in state [:score]))
+        current-question (nth (:game-seq @state) question-number)
+        colors (prep-colors-to-select-from (get-colors) 
+                                           (:correct-color current-question) 
+                                           color-choices)
+        ]
+    [:div 
+     {:css
+      {:display "flex"
+       :flex-direction "column"
+       :justify-content "space-between"
+       :height "-webkit-fill-available"}}
+     ; [:div {:css {:color "red"}} (str "Question: " (+ 1 question-number))]
+     ; [:div {:css {:color "green"}} (str "Score: " score)]
+     [:div
+      {:css
+       {:padding "20px"}}
+      (status-line total-questions question-number score)
+      ]
+     ; [:div (str "Correct: " (get-in current-question [:correct-color :color/name]))]
+     ; [:div (str colors)]
+     ; [:div (str current-question)]
+     [:div 
+      {:css {:display "flex"
+             :justify-content "center"}}
+      (double-card 
+        (:emotion current-question)
+        (:nation current-question))
+      ; [:div (get-in current-question [:emotion :emotion/name])]
+      ; [:div (get-in current-question [:nation :nation/name])]
+      ]
+     [:div (color-range colors)]
+     ]))
+
+(rum/defc game1 []
   [:div 
-   {:css {:padding "10px"}}
-   (qustion)
+   {:css 
+    {:padding "20px"
+     :max-width "450px"
+     :margin "10% auto 0 auto"}}
+   ; (qustion)
    ; [:div (color-button {:color/code "red"} #(println "hi") false)]
    [:div 
     {:css 
