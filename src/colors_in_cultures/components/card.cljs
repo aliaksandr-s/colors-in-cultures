@@ -3,17 +3,25 @@
             [cljss.rum :refer-macros [defstyled]]
             [cljss.core :refer-macros [defkeyframes]]))
 
-(defkeyframes show []
-  {:0%   {:opacity 0}
-   :25%  {:opacity 0.25}
-   :50%  {:opacity 0.5}
-   :75%  {:opacity 0.75}
+(defkeyframes rotate-show []
+  {:0%   {:opacity 0
+          :transform "translateX(0px) rotate(0deg)"}
    :100% {:opacity 1}})
 
+(defkeyframes rotate-hide []
+  {:0%   {:opacity 1}
+   :100% {:opacity 0
+          :transform "translateX(0px) rotate(0deg)"}})
+
 (rum/defcs card < (rum/local false ::selected?)
-  [state title icon-url back-side]
-  (let [local-selected? (::selected? state)]
+  [state title icon-url back-side show-animation? hide-animation?]
+  (let [local-selected? (::selected? state)
+        has-animation? (or show-animation? hide-animation?)]
     [:div {:on-click (when back-side (fn [_] (swap! local-selected? not))) 
+           :style {:animation (when has-animation? 
+                                (if hide-animation? 
+                                  (str (rotate-hide) " " "650ms ease")
+                                  (str (rotate-show) " " "650ms ease")))}
            :css 
            {:padding "10px"
             :user-select "none" 
@@ -26,7 +34,7 @@
             :border-radius "15%"
             :background-color "var(--accent-color)"
             :text-transform "Capitalize"
-            :cursor "pointer"
+            :cursor (when back-side "pointer")
             :opacity (if @local-selected? 1 0.7)
             :&:hover {:opacity 1}
             :transition "all 150ms ease"
@@ -46,26 +54,17 @@
                        :opacity (if @local-selected? "0")
                        :visibility (if @local-selected? "hidden")
                        }}} 
-     [:div {:css 
-            {:text-align "center"
-             :padding-top "6px"
-             :line-height "20px"
-             :font-size "18px"
-             :font-weight "500"
-             ; :padding-bottom "6px"
-             }} 
+     [:div 
+      {:css 
+       {:text-align "center"
+        :padding-top "6px"
+        :line-height "20px"
+        :font-size "18px"
+        :font-weight "500"}} 
       title]
      [:div 
       (if @local-selected?
-        [:div
-         ; {:style {:animation (str (show) " " "50ms ease 1")}}
-         ; (nations-list info)
-         back-side
-         ]
+        [:div back-side]
         [:img {:src icon-url
-               :style {
-                       :margin-top "22px"
-                       ; :animation (str (show) " " "30ms ease 1")
-                       }}])]
-     ]))
+               :style { :margin-top "22px" }}])]]))
 
