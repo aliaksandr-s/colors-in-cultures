@@ -7,20 +7,29 @@
 (rum/defc frontpage [] 
   [:div 
    {:css
-    {:margin-top "10%"
-     :display "flex"
+    {:display "flex"
      :flex-direction "column"
+     :height "-webkit-fill-available"
+     :justify-content "space-around"
      :align-items "center"}}
    [:h1 
-    [:span "Emotions"]
-    [:span "."]
-    [:span {:css {:color "#ea402b"}} "red"]]
+    [:span {:css {:color "#ea402b"}} "Col"]
+    [:span "motions"]]
    [:h2 
     {:css
-     {:padding "20px"}} 
-    "Ipsum illo minima reiciendis quis ab exercitationem nulla? Nulla eius architecto laborum nihil dolores aperiam, praesentium quod! Cumque facilis a quia animi velit Accusantium officiis optio nulla facilis et Officiis."]
-   (button "Start" "#5ac76c" #(rfe/push-state :colors-in-cultures.core/game))
-   [:br]
-   ; [:a {:href (rfe/href ::core/game)} "game"]
-   (button "Explore Library" "#50ade3" #(rfe/push-state :colors-in-cultures.core/library))
+     {:padding "20px"
+      :max-width "520px"
+      :text-align "center"
+      :font-weight "400"}} 
+    "This is a game that teaches you cultural differences. Try to guess what color represents an emotion in different cultures. Or explore the library to see all of them."]
+   [:div 
+    {:css 
+     {:display "flex"
+      :flex-direction "column"
+      :align-items "center"
+      :margin-bottom "40px"
+      "> *" {:margin-bottom "16px"}}}
+    (button "Start" "#5ac76c" #(rfe/push-state :colors-in-cultures.core/game))
+    (button "Explore Library" "#50ade3" #(rfe/push-state :colors-in-cultures.core/library))
+    ]
    ])

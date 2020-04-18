@@ -35,11 +35,10 @@ clj -R:nrepl -m nrepl.cmdline --middleware "[cider.nrepl/cider-middleware cider.
 
 ## To Do:
 
-2. Update icons 
-3. Add icons for nations
-4. Add game mode 
-5. refactor db to separate files 
-6. refactor core
-7. update card and db colors
-8. card text and color align
-9. route change animation
+- Update icons 
+- Add icons for nations
+- update card and db colors
+- card text and color align
+- route change animation
+- banner animation
+- button animation
