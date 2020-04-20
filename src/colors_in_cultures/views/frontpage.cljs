@@ -20,7 +20,7 @@
      {:padding "20px"
       :max-width "520px"
       :text-align "center"
-      :font-weight "400"}} 
+      :font-weight "500"}} 
     "This is a game that teaches you cultural differences. Try to guess what color represents an emotion in different cultures. Or explore the library to see all of them."]
    [:div 
     {:css 

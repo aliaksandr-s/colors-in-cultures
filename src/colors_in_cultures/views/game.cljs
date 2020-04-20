@@ -88,12 +88,12 @@
        :justify-content "center"
        :align-items "center" 
        :position "relative"
-       :width "400px"
+       ; :width "400px"
        :height "300px"
        "> *" {:position "absolute !important" 
               :opacity "1 !important"}
-       "> :first-child" {:transform "translateX(-75px) rotate(-20deg)"}
-       "> :last-child"  {:transform "translateX(75px) rotate(26deg)"}}}
+       "> :first-child" {:transform "translateX(-70px) rotate(-20deg)"}
+       "> :last-child"  {:transform "translateX(70px) rotate(26deg)"}}}
      (card (:emotion/name emotion) (:emotion/icon emotion) nil true selected-color)
      (card (:nation/name nation) (:nation/icon nation) nil true selected-color)]))
 
@@ -111,9 +111,8 @@
      {:css
       {:text-align "center"
        :text-transform "capitalize"
-       :margin-bottom "6px"
+       :font-weight "500"
        :color title-color
-       ; :position "relative"
        }}
      (:color/name color)]
     (color-button color on-click)]))

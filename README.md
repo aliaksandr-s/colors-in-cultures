@@ -37,8 +37,7 @@ clj -R:nrepl -m nrepl.cmdline --middleware "[cider.nrepl/cider-middleware cider.
 
 - Update icons 
 - Add icons for nations
-- update card and db colors
-- card text and color align
 - route change animation
 - banner animation
-- button animation
+- production build
+- deploy
