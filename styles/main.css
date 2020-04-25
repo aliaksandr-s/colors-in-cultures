@@ -1,0 +1,35 @@
+@import url('https://fonts.googleapis.com/css?family=Baloo+Bhaina+2:400,500&display=swap');
+
+:root {
+  --md-width: 960px;
+  --main-color: #f5eed2;
+  --accent-color: #e3deca;
+}
+
+html, body {
+  width: 100%;
+  /* height: 100%; */
+  padding: 0;
+  margin: 0;
+  background-color: #f5eed2;
+  font-family: 'Baloo Bhaina 2', Helvetica;
+  line-height: 32px;
+  font-size: 16px;
+  /* overflow: hidden; */
+}
+
+p {
+  margin: 0;
+}
+
+h1, h2, h3, h4 {
+  /* line-height: 28px; */
+}
+
+
+
+
+/* #app { */
+/*   padding: 20px; */
+/*   background-color: #dbeeff; */
+/* } */
