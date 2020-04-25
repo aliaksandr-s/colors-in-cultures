@@ -25,6 +25,14 @@
 (defn has-color? [relations color]
   (some (fn [rel] (= (-> rel second :color/name) color)) relations))
 
+(defn get-nations []
+  (->> (d/q '[:find [(pull ?nation-e [*]) ...]
+              :where [?nation-e :nation/name _]]
+            @conn)
+       (sort-by :nation/name)))
+
+; (get-nations)
+
 (defn get-nation [nation-id]
   (d/q '[:find (pull ?e [*]) .
          :in $ ?nation-id
@@ -44,12 +52,6 @@
        color-name))
 
 ; (get-color "blue")
-
-(defn get-nations [relations color]
-  (keep (fn [rel] 
-          (if (= (-> rel second :color/name) color) 
-            (-> rel first :nation/id get-nation))) 
-        relations))
 
 (defn transform-relations [relations]
   (map #(vector (-> (first %) get-nation) 
@@ -95,37 +97,3 @@
 
 ; (take 1 (game-seq))
 ; (game-seq 1)
-
-; (defn get-emotions-by-color [color]
-;   (->> (d/q '[:find (pull ?entity [:emotion/name :emotion/id :emotion/icon]) ?nations 
-;               :in $ ?color ?has-color get-nations
-;               :where 
-;               [?entity :emotion/name ?name]
-;               [?entity :emotion/id ?id]
-;               [?entity :emotion/relations ?rel]
-;               [(?has-color ?rel ?color) _]
-;               [(get-nations ?rel ?color) ?nations]]
-;             @conn
-;             color
-;             has-color?
-;             get-nations)
-;        (map #(vector (first %) 
-;                      (flatten (second %))))))
-
-
-; (get-emotions-by-color "red")
-
-; (defn get-nations-list [nation-ids]
-;   (d/q '[:find [?nation-name ...]
-;          :in $ [?nation-id ...]
-;          :where 
-;          [?n-entity :nation/id ?nation-id]
-;          [?n-entity :nation/name ?nation-name]]
-;        @conn
-;        nation-ids))
-
-; (get-nations-list ["A" "B"])
-
-; (->> (get-emotions-by-color "black")
-;     (map #(vector (first %) 
-;

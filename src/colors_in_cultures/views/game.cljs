@@ -9,7 +9,7 @@
             [colors-in-cultures.db.query :refer [game-seq get-colors]]))
 
 ; constants
-(def total-questions 5)
+(def total-questions 10)
 (def color-choices   4)
 (def points-reward   10)
 (def init-state {:score           0
@@ -77,6 +77,7 @@
     (= selected current)               "red"
     :else                              "black"))
 
+; components
 (rum/defc double-card < rum/reactive [emotion nation]
   (let [selected-color (rum/react selected-color)
         current-question (rum/react current-question)
@@ -148,18 +149,6 @@
     [:div (str "Question: " (+ 1 question-number) "/" total-questions)]
     [:div (str "Score: " score)]]))
 
-(rum/defc next-button []
-  (let [handle-click (fn [] (swap! state update-in [:question-number] inc))]
-    [:button 
-     {:on-click handle-click}
-     "next"]))
-
-(rum/defc prev-button []
-  (let [handle-click (fn [] (swap! state update-in [:question-number] dec))]
-    [:button 
-     {:on-click handle-click}
-     "prev"]))
-
 (rum/defc start-over-banner < rum/reactive [score]
   (let [score (rum/cursor-in state [:score])]    
    [:div
@@ -207,6 +196,3 @@
      [:div {:css {:padding-bottom "20px"}}
       (when-not game-ended?
         (color-range))]]))
-
-
-(.log js/console (:game-seq @state))

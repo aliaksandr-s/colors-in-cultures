@@ -58,6 +58,7 @@
       {:css 
        {:text-align "center"
         :padding-top "6px"
+        :padding-bottom "18px"
         :line-height "20px"
         :font-size "18px"
         :font-weight "500"}} 
@@ -66,5 +67,6 @@
       (if @local-selected?
         [:div back-side]
         [:img {:src icon-url
-               :style { :margin-top "22px" }}])]]))
+               :style { 
+                        :width "100%" }}])]]))
 

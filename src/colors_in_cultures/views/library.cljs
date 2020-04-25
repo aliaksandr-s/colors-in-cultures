@@ -4,7 +4,7 @@
             [colors-in-cultures.components.search-bar :refer [search-bar]]
             [cljss.rum :refer-macros [defstyled]]
             [colors-in-cultures.utils :refer [debounce]]
-            [colors-in-cultures.db.query :refer [get-emotions get-color-code get-colors]]))
+            [colors-in-cultures.db.query :refer [get-emotions get-color-code get-colors get-nations]]))
 
 (defonce state (atom {:search-query ""}))
 
@@ -25,8 +25,7 @@
   [:div {:css 
          {:display "flex"
           :flex-direction "column"
-          :line-height "14px"
-          :margin-top "16px"}} 
+          :line-height "14px"}} 
    (for [nat-col nations-colors]
      (let [nation (first nat-col)
            color (second nat-col)]
@@ -67,7 +66,23 @@
                  (nations-list (second entity)))
            (rum/with-key (:emotion/id (first entity)))))]))
 
+(rum/defc n-list []
+  (let [nations (get-nations)]
+    [:div
+     {:css
+      {:padding-top "30px"
+       :display "flex"
+       :flex-wrap "wrap"
+       :justify-content "center"
+       "> *" {:margin "8px"}}}
+     (for [entity nations]
+       (-> (card (:nation/name entity) 
+                 (:nation/icon entity))
+           (rum/with-key (:nation/id entity))))]))
+
 (rum/defc library []
   [:div 
+   {:css {:padding-bottom "30px"}}
    (search)
+   ; (n-list)
    (emotions-list)])

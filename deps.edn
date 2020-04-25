@@ -9,9 +9,8 @@
          metosin/reitit            {:mvn/version "0.4.2"}
          datascript                {:mvn/version "0.18.10"}}
 
- :aliases {:nrepl
-           {:extra-deps
-            {nrepl/nrepl       {:mvn/version "0.6.0"}
-             cider/cider-nrepl {:mvn/version "0.23.0"}
-             cider/piggieback  {:mvn/version "0.4.2"}}}}
- }
+ :aliases {:nrepl {:extra-deps
+                   {nrepl/nrepl       {:mvn/version "0.6.0"}
+                    cider/cider-nrepl {:mvn/version "0.23.0"}
+                    cider/piggieback  {:mvn/version "0.4.2"}}}
+           :prod   {:main-opts ["-m" "figwheel.main" "-O" "advanced" "-bo" "dev"]}}}

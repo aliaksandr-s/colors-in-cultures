@@ -6,7 +6,6 @@
   [:input {:type "search"
            :placeholder "Search..."
            :value value
-           ; :on-change (fn [e] (println (-> e .-target .-value)))
            :on-change (fn [e] (on-select (-> e .-target .-value)))
            :css {
                  :width "18rem"
