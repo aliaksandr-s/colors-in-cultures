@@ -20,8 +20,8 @@
     [:div {:on-click (when back-side (fn [_] (swap! local-selected? not))) 
            :style {:animation (when has-animation? 
                                 (if hide-animation? 
-                                  (str (rotate-hide) " " "650ms ease")
-                                  (str (rotate-show) " " "650ms ease")))}
+                                  (str (rotate-hide) " " "750ms ease")
+                                  (str (rotate-show) " " "750ms ease")))}
            :css 
            {:padding "10px"
             :user-select "none" 
@@ -67,6 +67,5 @@
       (if @local-selected?
         [:div back-side]
         [:img {:src icon-url
-               :style { 
-                        :width "100%" }}])]]))
+               :style {:width "100%" }}])]]))
 

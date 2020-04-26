@@ -5,6 +5,7 @@
             [colors-in-cultures.components.color-button :refer [color-button]]
             [colors-in-cultures.components.button :refer [button]]
             [colors-in-cultures.components.card :refer [card]]
+            [colors-in-cultures.utils :refer [preload-image]]
             [cljss.core :refer-macros [defkeyframes]]
             [colors-in-cultures.db.query :refer [game-seq get-colors]]))
 
@@ -12,13 +13,18 @@
 (def total-questions 10)
 (def color-choices   4)
 (def points-reward   10)
+
+; state
 (def init-state {:score           0
                  :question-number 0
                  :game-seq        (game-seq total-questions)
                  :selected-color  nil})
 
-; state
 (defonce state (atom init-state))
+
+(def game-seq-state
+  (rum/derived-atom [state] ::game-seq
+                    (fn [state] (get-in state [:game-seq]))))
 
 (def game-ended?
   (rum/derived-atom [state] ::game-ended
@@ -37,6 +43,14 @@
   (rum/derived-atom [state] ::selected-color
                     (fn [state] (get-in state [:selected-color]))))
 
+; side effects
+(rum/derived-atom [game-seq-state] ::game-seq-watch
+                  (fn [game-seq-state] 
+                    (doseq [el game-seq-state]
+                      (let [emotion-icon (get-in el [:emotion :emotion/icon])
+                            nation-icon (get-in el [:nation :nation/icon])]
+                        (preload-image nation-icon)
+                        (preload-image emotion-icon)))))
 
 ; mutations
 (defn reset-game! []
@@ -59,7 +73,7 @@
         (fn [] 
           (current-question-inc)
           (swap! state update-in [:selected-color] (fn [] nil))) 
-        650))))
+        750))))
 
 ; utils
 (defn prep-colors-to-select-from [colors correct-color n]
