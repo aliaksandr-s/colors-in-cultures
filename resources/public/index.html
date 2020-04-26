@@ -6,7 +6,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="shortcut icon"type="image/x-icon" href="/favicon.ico">
     <link rel="stylesheet" href="styles/main.css">
+
+    <!-- A tittle hack to make client routes work with gh-pages -->
+    <!-- works in conjunction with 404.html -->
+    <!-- https://www.smashingmagazine.com/2016/08/sghpa-single-page-app-hack-github-pages/ -->
+    <script>
+      (function(){
+        var redirect = sessionStorage.redirect;
+        delete sessionStorage.redirect;
+        if (redirect && redirect != location.href) {
+          history.replaceState(null, null, redirect);
+        }
+      })();
+    </script>
   </head>
+
   <body>
     <div id="app"></div>
     <script src="cljs-out/dev-main.js"></script>

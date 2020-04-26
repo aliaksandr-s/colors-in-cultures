@@ -20,6 +20,6 @@ gh-pages:
 	cd www
 	git add --all
 	git commit -m "Deploy updates"
-	git push origin gh-pages
+	git push -f origin gh-pages
 	
 deploy: build gh-pages
