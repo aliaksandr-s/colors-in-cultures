@@ -35,12 +35,12 @@ clj -R:nrepl -m nrepl.cmdline --middleware "[cider.nrepl/cider-middleware cider.
 
 ## Set up git worktree for deployment
 
-- git checkout --orphan gh-pages
-- git reset --hard
-- git commit --allow-empty -m "Initializing gh-pages branch"
-- git checkout master
-- git worktree add www gh-pages
-- echo "www" >> .gitignore
+- `git checkout --orphan gh-pages`
+- `git reset --hard`
+- `git commit --allow-empty -m "Initializing gh-pages branch"`
+- `git checkout master`
+- `git worktree add www gh-pages`
+- `echo "www" >> .gitignore`
 
 
 ## To Do:
