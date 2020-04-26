@@ -71,7 +71,6 @@
        shuffle))
 
 (defn get-button-title-color [correct selected current]
-  (println correct selected current)
   (cond 
     (and selected (= correct current)) "green"
     (= selected current)               "red"

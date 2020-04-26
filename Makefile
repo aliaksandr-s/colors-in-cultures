@@ -5,6 +5,7 @@ build:
 	rm -rf target
 	rm -rf www/*
 	clojure -A:prod
+	rm -rf target/public/cljs-out/dev
 	cp -r target/public/cljs-out www
 	cp -r resources/public/* www 
 	rm -rf target

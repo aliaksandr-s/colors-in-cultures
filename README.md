@@ -33,12 +33,23 @@ clj -R:nrepl -m nrepl.cmdline --middleware "[cider.nrepl/cider-middleware cider.
 :CljEval (figwheel.main.api/cljs-repl "dev") 
 ```
 
+## Set up git worktree for deployment
+
+- git checkout --orphan gh-pages
+- git reset --hard
+- git commit --allow-empty -m "Initializing gh-pages branch"
+- git checkout master
+- git worktree add www gh-pages
+- echo "www" >> .gitignore
+
+
 ## To Do:
 
-- deploy
-- ci
+- fix routing in prod
+- optimize image loading time
 - analytics
-- route change animation
-- banner animation
-- pwa
-- link to menu
+- ci ?
+- route change animation ?
+- banner animation ?
+- pwa ?
+- link to menu ?
