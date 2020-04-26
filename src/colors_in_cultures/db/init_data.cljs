@@ -383,7 +383,7 @@
     :emotion/name "Modesty"
     :emotion/icon "icons/emotions/flower.svg" 
     :emotion/relations [["A" "purple"]
-                        ["B" "gray"]]}
+                        ["B" "grey"]]}
    {:emotion/id   "58"
     :emotion/name "Money"
     :emotion/icon "icons/emotions/money.svg" 
@@ -463,7 +463,7 @@
     :emotion/name "Reliable"
     :emotion/icon "icons/emotions/trust.svg" 
     :emotion/relations [["A" "brown"]
-                        ["B" "gray"]]}
+                        ["B" "grey"]]}
    {:emotion/id   "71"
     :emotion/name "Repels Evil"
     :emotion/icon "icons/emotions/amulet.svg" 
@@ -475,7 +475,7 @@
    {:emotion/id   "72"
     :emotion/name "Respect"
     :emotion/icon "icons/emotions/respect.svg" 
-    :emotion/relations [["A" "gray"]
+    :emotion/relations [["A" "grey"]
                         ["B" "white"]
                         ["D" "silver"]
                         ["E" "yellow"]]}
