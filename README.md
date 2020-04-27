@@ -45,9 +45,9 @@ clj -R:nrepl -m nrepl.cmdline --middleware "[cider.nrepl/cider-middleware cider.
 
 ## To Do:
 
-- fix routing in prod
-- optimize image loading time
-- analytics
+- inline svg ?
+- turned first card in library ?
+- signature ?
 - ci ?
 - route change animation ?
 - banner animation ?
