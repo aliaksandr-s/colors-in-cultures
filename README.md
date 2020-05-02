@@ -42,14 +42,15 @@ clj -R:nrepl -m nrepl.cmdline --middleware "[cider.nrepl/cider-middleware cider.
 - `git worktree add www gh-pages`
 - `echo "www" >> .gitignore`
 
+<!--
+## To Do:
 
-> ## To Do:
-
-> - inline svg ?
-> - turned first card in library ?
-> - signature ?
-> - ci ?
-> - route change animation ?
-> - banner animation ?
-> - pwa ?
-> - link to menu ?
+- inline svg ?
+- turned first card in library ?
+- signature ?
+- ci ?
+- route change animation ?
+- banner animation ?
+- pwa ?
+- link to menu ?
+-->
