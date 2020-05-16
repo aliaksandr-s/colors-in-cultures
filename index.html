@@ -36,7 +36,13 @@
   </head>
 
   <body>
-    <div id="app"></div>
+    <div id="app">
+     <!-- Show loader until js is ready --> 
+      <div class="spinner">
+        <div class="cube1"></div>
+        <div class="cube2"></div>
+      </div>
+    </div>
     <script src="cljs-out/dev-main.js"></script>
 
     <!-- PWA serviceWorker -->
