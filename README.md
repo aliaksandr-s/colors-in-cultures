@@ -12,7 +12,7 @@
             cider/piggieback {:mvn/version "0.4.2"}}}}
 ```
 
-## Dev process with Vim
+## Dev process with Vim and fireplace
 
 1. Run a project from a terminal with the next command:
 
@@ -31,6 +31,27 @@ clj -R:nrepl -m nrepl.cmdline --middleware "[cider.nrepl/cider-middleware cider.
 ```clojure
 :CljEval (do (require 'figwheel.main.api) (figwheel.main.api/start "dev"))
 :CljEval (figwheel.main.api/cljs-repl "dev") 
+```
+
+## Dev process with Vim and icedVim
+
+1. Run iced command from a terminal:
+
+```
+iced repl --with-cljs
+```
+
+2. Run a project from the terminal nrepl:
+
+```
+(do (require 'figwheel.main.api) (figwheel.main.api/start "dev"))
+```
+
+3. Connect to a running repl from vim:
+
+```
+:IcedConnect {port}
+:IcedCljsRepl (figwheel.main.api/repl-env "dev")
 ```
 
 ## Set up git worktree for deployment

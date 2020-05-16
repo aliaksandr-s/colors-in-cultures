@@ -12,7 +12,7 @@ build:
 
 .ONESHELL:
 serve:
-	cd target/public
+	cd www
 	serve
 
 .ONESHELL:
