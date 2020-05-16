@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="shortcut icon"type="image/x-icon" href="/favicon.ico">
     <link rel="stylesheet" href="styles/main.css">
+    <link rel="manifest" href="./manifest.json">
 
 
     <!-- Global site tag (gtag.js) - Google Analytics -->
@@ -19,7 +20,7 @@
     </script>
 
 
-    <!-- A tittle hack to make client routes work with gh-pages -->
+    <!-- A little hack to make client routes work with gh-pages -->
     <!-- works in conjunction with 404.html -->
     <!-- https://www.smashingmagazine.com/2016/08/sghpa-single-page-app-hack-github-pages/ -->
     <script>
@@ -36,5 +37,25 @@
   <body>
     <div id="app"></div>
     <script src="cljs-out/dev-main.js"></script>
+
+    <!-- PWA serviceWorker -->
+    <script>
+      window.addEventListener('load', e => {
+        registerSW(); 
+      });
+
+      async function registerSW() { 
+        if ('serviceWorker' in navigator) { 
+          try {
+            await navigator.serviceWorker.register('./sw.js'); 
+          } catch (e) {
+            console.log('ServiceWorker registration failed. Sorry about that.'); 
+          }
+        } else {
+          console.log('ServiceWorker is not supported in this browser'); 
+        }
+      }
+    </script>
+
   </body>
 </html>
