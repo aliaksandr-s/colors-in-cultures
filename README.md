@@ -33,7 +33,7 @@ clj -R:nrepl -m nrepl.cmdline --middleware "[cider.nrepl/cider-middleware cider.
 :CljEval (figwheel.main.api/cljs-repl "dev") 
 ```
 
-## Dev process with Vim and icedVim
+## Dev process with Vim and IcedVim
 
 1. Run iced command from a terminal:
 
