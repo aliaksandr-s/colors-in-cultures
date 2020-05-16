@@ -7,10 +7,10 @@
 
 (defn preload-image [src]
   (let [i (js/Image.)] 
-    (set! (.-src i) src)))
+    (js/Promise. (fn [resolve]
+                   (set! (.-src i) src)))))
 
 ; (preload-image "icons/emotions/ouroboros.svg")
-
 
 ; (defn preload-images [src-list]
 ;   (doseq [src src-list] 
