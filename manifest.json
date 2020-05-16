@@ -1,0 +1,17 @@
+{
+  "name": "Colors in Cultures",
+  "short_name": "Colmotions",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#f5eed2",
+  "description": "A game that teaches you cultural differences",
+  "theme_color": "#f5eed2",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "./pwa-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
