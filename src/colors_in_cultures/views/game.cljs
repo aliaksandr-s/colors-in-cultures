@@ -194,7 +194,7 @@
       {:display "flex"
        :flex-direction "column"
        :justify-content "space-between"
-       :height "-webkit-fill-available"}}
+       :height "100%"}}
      [:div
       {:css
        {:padding "20px"}}

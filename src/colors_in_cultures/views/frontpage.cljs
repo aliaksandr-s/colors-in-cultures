@@ -9,7 +9,7 @@
    {:css
     {:display "flex"
      :flex-direction "column"
-     :height "-webkit-fill-available"
+     :height "100%"
      :justify-content "space-around"
      :align-items "center"}}
    [:h1 

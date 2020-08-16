@@ -14,7 +14,8 @@
 (rum/defc container [content]
   [:div {:css 
          {:max-width "var(--md-width)"
-          :margin "auto auto"}} 
+          :margin "auto auto"
+          :height "100%"}} 
    content])
 
 (rum/defc current-page < rum/reactive []
