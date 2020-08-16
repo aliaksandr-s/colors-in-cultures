@@ -17,6 +17,10 @@ html, body {
   /* overflow: hidden; */
 }
 
+#app {
+  height: 100%;
+}
+
 p {
   margin: 0;
 }
