@@ -13,7 +13,7 @@ build:
 .ONESHELL:
 serve:
 	cd www
-	serve
+	serve # global node package
 
 .ONESHELL:
 gh-pages:
